@@ -1,0 +1,148 @@
+Nov 13, 2017
+OBJECTS
+
+Creating a new Object
+    object = Object.new
+
+Defining Objects behavior
+    def obj.talk
+      puts 'I am an object. Do you object?'
+    end
+
+Working with true or false
+    if ticket.available?
+      puts "You're in luck! Tickets are available."
+    else
+      puts "Sorry--that seat has been sold."
+    end
+
+//////Innate methods of an object: object.methods////////
+//////Class of an object: object.class////////
+
+USEFUL METHODS:
+
+- object_id
+- respond_to?
+    if obj.respond_to?("talk")
+      obj.talk
+    else
+      puts "Sorry, the object doesn't understand the 'talk' message."
+    end
+
+- send
+    if request == "venue"
+      puts ticket.venue
+    elsif request == "performer"
+      puts ticket.performer
+
+    SEND ALTERNATIVE
+    if ticket.respond_to?(request)
+      puts ticket.send(request)
+    else
+      puts "No such information available"
+    end
+
+ARGUMENTS
+    MULTIPLE ARGS
+    Use Splat *
+        def obj.multi_args(*x)          it accepts zero or more args.
+        def obj.two_or_more(a,b,c*)    two or more args, last is an array
+
+    DEFAULT ARGS
+        If c is not provided then it will be 1, otherwise it will be provided value.
+        def default_args(a,b,c=1)
+            puts "Values of vars: ",a,b,c
+        end
+
+    MIXED ARGS
+        def mixed_args(a,b,*c,d)
+          puts "Arguments:"
+          p a,b,c,d
+        end
+        mixed_args(1,2,3,4,5)
+        RESULTS:
+        1
+        2
+        [3, 4]
+        5
+
+        mixed_args(1,2,3)
+        1
+        2
+        []
+        3
+
+LOCAL VARIABLES:
+Local variable names start with a lowercase letter or
+an underscore and are made up of alphanumeric characters
+and underscores. All of the following vars are valid
+    x
+    _x
+    name
+    first_name
+    plan9
+    user_ID
+    _
+
+The method .replace for variables have implications for objects
+its being referenced like the following:
+    a = "Hello"
+    b = a
+    b.replace("bye")
+    a
+    => "bye"
+    EXAMPLE BELOW
+    //IMMEDIATE VALUES:
+        Integers symbols and true, false, nil when assigned  to a variable
+        they hold the value itself rather than a reference to it. Thats why
+        you cannot have incremental operators like x++.
+
+    REFERENCES ON METHODS ARGS
+        Methods can change you can change the contents of a var
+            s = "Original string content!"
+
+            def change_string(str)
+              str.replace("New string content!")
+            end
+
+            change_string(s)
+            puts s
+            => New string content!
+
+DUPING AND FREEZING OBJECTS
+If you want to protect objects from being changed inside methods
+to which you send them, you can use the dup method, which duplicates an object:
+            s = "Original string content!"
+            change_string(s.dup)
+            puts s
+
+            =>“Original string content!”
+
+You can also freeze an object, which prevents it from undergoing further
+ change:
+            s = "Original string content!"
+            s.freeze
+            change_string(s)
+
+            #1: RuntimeError: can’t modify frozen string
+To complete the picture, there’s also a method called clone.
+It’s a lot like dup. The difference is that if you clone a frozen object,
+the clone is also frozen—whereas if you dup a frozen object,
+the duplicate isn’t frozen.
+
+Some dangers still lurk, though. Even if you freeze an array, it’s still possible to change the objects inside the array (assuming they’re not frozen):
+
+            >> numbers = ["one", "two", "three"]
+            => ["one", "two", "three"]
+
+            >> numbers.freeze
+            => ["one", "two", "three"]
+
+            >> numbers[2] = "four"
+            RuntimeError: can't modify frozen array
+
+            >> numbers[2].replace("four")
+            => "four"
+
+            >> numbers
+            => ["one", "two", "four"]

@@ -1,0 +1,92 @@
+Nov 12, 2017
+Ruby literacy
+
+- "Ruby" is the language, "ruby" the interpreter. There is no RUBY since there is no acronym.
+- Installation of any ruby version can be found on http://ruby-lang.org
+- IRB stands for Ruby Interactive, can be run in terminal
+
+SOME INPUT/OUTPUT METHODS
+
+    print     Prints exactly what is given
+    puts      Adds a newline at the end
+    p         Outputs an inspect string and prints in array notation
+
+    true
+    false
+    nil       Non-object, absence of value or result.
+              FALSE AND NIL CAUSE CONDITIONAL EXPRESSIONS TO FAIL
+
+    self      Self refers to the default object. Method calls that dont specify a calling object are called on self.
+
+    #comments
+
+VARIABLES
+
+- Local
+  Start with a lowercase or an underscore, Ruby convention is to use underscores than camelcase (like firstName is bad).
+
+- Instance
+  Store information for individual objects and start with a "@".
+
+- Class
+  Store information per class hierarchy. Start with "@@"
+
+- Global
+  Start with "$". Can start with digits or special symbols.
+
+- Constants
+  Begin with uppercase letters (can be FirstName or FIRST_NAME)
+
+- Keywords
+   def,class,if, __File__ and others
+
+THE ORIGIN OF OBJECTS IN CLASSES
+Classes define clusters of behavior or functionality. Every object is an instance of exactly one class.
+Built in classes: String Array, Fixnum...etc.
+
+The class is responsible for launching the object into existence, a process known as instantiation
+
+//// ruby -cw program.rb      checks for syntax errors and high level warnings ////
+
+WRITING AND READING FROM FILE
+IO class is the basis for all input and output in Ruby.
+READING
+var = File.read('name_of_file')       read opens a file and ensures is closed before returning.
+
+WRITING
+write_out = File.new('file.out','w')
+write_out.puts some_var_or_text
+write_out.close
+
+"r"  Read-only, starts at beginning of file  (default mode).
+"r+" Read-write, starts at beginning of file.
+"w"  Write-only, truncates existing file
+     to zero length or creates a new file for writing.
+"w+" Read-write, truncates existing file to zero length
+     or creates a new file for reading and writing.
+"a"  Write-only, each write call appends data at end of file.
+     Creates a new file for writing if file does not exist.
+
+"a+" Read-write, each write call appends data at end of file.
+     Creates a new file for reading and writing if file does
+     not exist.
+
+LOADING EXTERNAL FILES AND EXTENSIONS
+.   current directory
+..  up directory
+
+USING LOAD
+    puts 'This is the first (master) program file'
+    load 'loadee.rb'
+    puts 'And back again to the first file.'
+
+USING REQUIRE
+Require is called more than once and doesn't reload files already loaded.
+It also doesn't need the extension of the file.
+
+    puts 'This is the first (master) program file'
+    require './loadee'
+    puts 'And back again to the first file.'
+
+REQUIRE RELATIVE
+Useful when navigating the local directory hierarchy
