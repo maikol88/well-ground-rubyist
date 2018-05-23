@@ -49,3 +49,151 @@ for values: instance variables.
             @name
           end
         end
+
+- INITIALIZE METHOD
+
+When writing a class you can define a specialize method called initialize that will be
+executed every time we create a new instance of the class.
+    class Ticket
+      def initialize(venue,date)
+          @venue = venue
+          @date = date
+        puts "Creating a new ticket!"
+      end
+      def venue
+        @venue
+      end
+
+      def date
+         @date
+      end
+    end
+
+- GETTER: THIS ACTUALLY IS A GETTER, RETURNS THE DATE: Ticket.date
+      def date
+         @date
+      end
+
+- SETTER: Sets values
+      def set_seat(position)
+        @seat = position
+      end
+
+      //////Syntactic sugar//////
+      def price=(amount)
+        @price = amount
+      end
+
+      Ticket.price = 63
+
+- ATTRIBUTE:  An attribute is a property of an object whose value can be read and/or written through the object. Attribute is a
+                high-level term for a particular configuration of methods and instance variables.
+
+ATTR READER & ATTR WRITER
+
+class Ticket
+  attr_reader :venue, :date, :price
+  attr_writer :price
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+end
+
+ATTR ACCESSOR
+class Ticket
+  attr_reader :venue, :date
+  attr_accessor :price             (read and write, cal also be <    attr :price, true    > )
+  # ... etc.
+end
+
+- INHERITANCE: One class “inherits” from another and the instances of the subclass acquire the behaviors—the
+                methods—defined in the superclass. Every Ruby class can have only one superclass, in keeping
+                with the principle of single inheritance. Ruby’s single inheritance doesn’t restrict you: Ruby
+                provides modules, which are bundles of programming functionality similar to classes (except that
+                they don’t have instances), that you can easily graft onto your class’s family tree to provide
+                as many methods for your objects as you need.
+class Publication
+  attr_accessor :publisher
+end
+
+class Magazine < Publication
+  attr_accessor :editor
+end
+
+
+mag = Magazine.new
+mag.publisher = "David A. Black"
+mag.editor = "Joe Smith"
+puts "Mag is published by #{mag.publisher}, and edited by #{mag.editor}."
+
+class Ezine < Magazine
+end
+
+Note that it’s not mandatory to add new methods to every subclass. You might want to create an Ezine class just for the sake of being able
+to call Ezine.new rather than Magazine.new, to make your code more expressive.
+
+The superclass of Class is Module. Instances of Class therefore have access to the instance methods defined in Module; among these are
+ the attr_accessor family of methods.
+
+ Class methods and instance methods aren’t radically different from each other; they’re all methods, and their execution is always
+ triggered by sending a message to an object. It’s just that the object getting the message may be a class object. Still, there are
+ differences and important points to keep in mind as you start writing methods at various levels.
+
+ A class object (like Ticket) has its own methods, its own state, and its own identity. It doesn’t share these things with instances of itself.
+ Sending a message to Ticket isn’t the same thing as sending a message any other instance of Ticket.
+
+ Notation and what they refer to:
+
+ Ticket#price refers to the instance method price in the class Ticket.
+ Ticket.most_expensive refers to the class method most_expensive in the class Ticket.
+ Ticket::most_expensive also refers to the class method most_expensive in the class Ticket.
+
+
+
+- Constants in classes
+class Ticket
+    VENUES = ["Convention Center", "Fairgrounds", "Town Hall"]
+
+    def initialize(venue, date)
+      if VENUES.include?(venue)
+        @venue = venue
+      else
+        raise ArgumentError, "Unknown venue #{venue}"
+      end
+      @date = date
+    end
+end
+
+TO REACH CONSTANTS OUTSIDE OF CLASS DEFINITION USE THE PATH NOTATION
+puts Ticket::VENUES
+ OR
+
+ venues = Ticket::VENUES
+ venues << "High School Gym"
+
+
+
+another examples:
+ Math::PI
+ RUBY_VERSION
+ RUBY_PATCHLEVEL
+ RUBY_RELEASE_DATE
+ RUBY_REVISION    (all belongs to ruby -v)
+
+- Anonymous classes
+c = Class.new do
+  def say_hello
+    puts "Hello!"
+  end
+end
+
+
+
+
+//////////////// helpful methods
+
+is_a?           could be used to find if an object is a particular class?
+respond_to?     method that lets you determine in advance whether an object knows how to handle a particular method
+ancestors
+superclass

@@ -94,7 +94,7 @@ its being referenced like the following:
     EXAMPLE BELOW
     //IMMEDIATE VALUES:
         Integers symbols and true, false, nil when assigned  to a variable
-        they hold the value itself rather than a reference to it. Thats why
+        they hold the value itself rather than a reference to it. That's why
         you cannot have incremental operators like x++.
 
     REFERENCES ON METHODS ARGS

@@ -5,7 +5,7 @@ class Ticket
     puts "Creating a new ticket!"
   end
   def event
-    'Cannot be specified yet,,,'
+    'Cannot be specified yet...'
   end
 
   def price
