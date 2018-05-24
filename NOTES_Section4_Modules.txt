@@ -1,0 +1,29 @@
+ike classes, modules are bundles of methods and constants. Unlike classes, modules don’t have instances; instead, you
+specify that you want to add the functionality of a particular module to that of a class or of a specific object.
+
+It’s no accident that modules are similar in many respects to classes: the Class class is a subclass of the Module class,
+so every class object is also a module object. But you could say that modules are the more basic structure, and classes
+are just a specialization.
+
+module MyFirstModule
+  def say_hello
+    puts "Hello"
+  end
+end
+
+Modules don’t have instances. Instead, modules get mixed in to classes, using either the
+INCLUDE method or the PREPEND method.
+
+class ModuleTester
+  include MyFirstModule     < Described above, incllude and prepend dont use strings "" while require and load do
+end
+
+mt = ModuleTester.new
+mt.say_hello
+
+The main difference between inheriting from a class and mixing in a module is that you can mix in more than one module.
+No class can inherit from more than one class. In cases where you want numerous extra behaviors for a class’s instances—and
+you don’t want to stash them all in the class’s superclass and its ancestral classes—you can use modules to organize your
+code in a more granular way.
+
+Include a

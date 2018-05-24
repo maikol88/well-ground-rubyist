@@ -1,11 +1,3 @@
-def Ticket.most_expensive(*tickets)
-  tickets.max_by(&:price)
-end
-
-e.g. highest = Ticket.most_expensive(th,cc,fg)
-
----------------------------------
-
 module Stacklike
   def stack
     @stack ||= []   #The effect of this operator is to set the variable
@@ -18,5 +10,6 @@ module Stacklike
   def take_from_stack
     stack.pop
   end
+end
 
----------------------------------
+

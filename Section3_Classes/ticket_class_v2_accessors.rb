@@ -22,5 +22,5 @@ def Ticket.most_expensive(*tickets)
   tickets.max_by(&:price)
 end
 
-highest = Ticket.most_expensive(th,cc,fg)
+highest = Ticket.most_expensive(th, cc, fg)
 puts "The highest-priced ticket is the one for #{highest.venue}."
