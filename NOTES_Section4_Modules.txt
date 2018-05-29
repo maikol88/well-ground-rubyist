@@ -1,4 +1,6 @@
-ike classes, modules are bundles of methods and constants. Unlike classes, modules don’t have instances; instead, you
+
+
+Like classes, modules are bundles of methods and constants. Unlike classes, modules don’t have instances; instead, you
 specify that you want to add the functionality of a particular module to that of a class or of a specific object.
 
 It’s no accident that modules are similar in many respects to classes: the Class class is a subclass of the Module class,
@@ -26,4 +28,93 @@ No class can inherit from more than one class. In cases where you want numerous 
 you don’t want to stash them all in the class’s superclass and its ancestral classes—you can use modules to organize your
 code in a more granular way.
 
-Include a
+PRECEDENCE:
+- Using INCLUDE, the last include has the most precedence
+- Repeating a second include of same module doesn't increase precedence.
+- Class methods have precedence over Include
+- USING PREPEND gives it all the precedence.
+
+SUPER keyword for jumpt to next-highest definition in method lookup
+
+        module M
+          def report
+            puts "'report' method in module M"
+          end
+        end
+        class C
+          include M
+          def report
+            puts "'report' method in class C"
+            super
+            puts "Back from the 'super' call."
+          end
+        end
+        c = C.new
+        c.report
+
+PRINTS:
+          'report' method in class C
+          'report' method in module M
+          Back from the 'super' call.
+
+
+Using super to wrap method in a subclass:
+        class Bicycle
+          attr_reader :gears, :wheels, :seats
+          def initialize(gears = 1)
+            @wheels = 2
+            @seats = 1
+            @gears = gears
+          end
+        end
+        class Tandem < Bicycle
+          def initialize(gears)
+            super
+            @seats = 2
+          end
+        end
+
+The method_missing method:
+FROM THIS
+        >> o = Object.new
+        => #<Object:0x0000010141bbb0>
+        >> o.blah
+        NoMethodError: undefined method `blah' for #<Object:0x0000010141bbb0>
+TO THIS:
+        >> def o.method_missing(m, *args)
+        >>   puts "You can't call #{m} on this object; please try again."
+        >> end
+        => nil
+        >> o.blah
+        You can't call blah on this object; please try again.
+
+
+No single rule or formula always results in the right design. But it’s useful to keep a couple of considerations in mind
+when you’re making class-versus-module decisions:
+
+- Modules don’t have instances. It follows that entities or things are generally best modeled in classes, and characteristics
+or properties of entities or things are best encapsulated in modules. Correspondingly, as noted in section 4.1.1, class names tend
+to be nouns, whereas module names are often adjectives (Stack versus Stacklike).
+
+- A class can have only one superclass, but it can mix in as many modules as it wants. If you’re using inheritance, give priority to creating a sensible superclass/subclass relationship. Don’t use up a class’s one and only superclass relationship to endow the class with what might turn out to be just one of several sets of characteristics.
+
+module SelfPropelling
+...
+class Vehicle
+  include SelfPropelling
+...
+class Truck < Vehicle
+...
+
+
+Nesting modules and classes:
+Ine one needs to model an entity choose a CLASS
+If one nees to encapsulate characteristics or properties of entities use a MODULE
+e.g.
+
+        module Tools
+          class Hammer
+          end
+        end
+
+        h = Tools::Hammer.new
